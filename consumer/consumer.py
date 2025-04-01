@@ -23,7 +23,7 @@ async def process_message(message: aio_pika.IncomingMessage):
 
 async def main():
     async with channel_pool.acquire() as channel:
-        exchange = await channel.declare_exchange("new_exchange", type=aio_pika.ExchangeType.DIRECT, durable=True)
+        exchange = await channel.declare_exchange("new_exchange", type=aio_pika.ExchangeType.FANOUT, durable=True)
         queue = await channel.declare_queue("new_queue", durable=True)
         await queue.bind(exchange, routing_key="new_queue")
         await queue.consume(process_message)

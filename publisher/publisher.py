@@ -6,7 +6,7 @@ async def send_message(
     message: str
 ) -> None:
     async with channel_pool.acquire() as channel:
-        exchange = await channel.declare_exchange("new_exchange", type=aio_pika.ExchangeType.DIRECT,
+        exchange = await channel.declare_exchange("new_exchange", type=aio_pika.ExchangeType.FANOUT,
             durable=True
         )
         queue = await channel.declare_queue("new_queue", durable=True)
